@@ -6,6 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
 
+  /* Now, I need to detect whether the use is clicking on the “submit” button in the compose 
+  mail page. To do that, I will enter into the function that reads the whole DOM (the 
+  COMContentLoaded function), and I will add an event listener for the submit button. That way, 
+  if the user clicks on “submit”, the send_mail() function will be called (source: 
+  https://youtu.be/Oive66jrwBs .)
+
+  I need the ID of the <form> tag, and put it into the event listener of the submit button. In this case, the ID is “compose-form”.
+  */
+  document.querySelector('#compose-form').addEventListener('submit', send_mail);
+
   // By default, load the inbox
   load_mailbox('inbox');
 });
@@ -31,3 +41,76 @@ function load_mailbox(mailbox) {
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 }
+
+/* Send mail function. This will get the data from the page for composing an email, 
+and then send it into the databse. 
+
+Since I’ll need to use an API to send the email, and I’ll need to get the data from some place, 
+I’ll have to use the “fetch()” function. For the rest, I need to look at the send_mail() view in 
+views.py to see how that function works. The views will be pretty much my API. So, I need to look at 
+how the send_mail() function from the API works. Upon reading the vies.py file, I realize that there’s 
+no “send_mail()” function. The closest thing to it seems to be a function called compose().
+
+I’ll look at the compose() view, and see how to fetch data from it so that I can send an email.
+
+After reading a bit more, turns ou that the compose() view displays the form that lets me write an 
+email (like, type the person’s email, the actual email itself, and a title). Now, if the user clicks 
+on “send”, the contents of this view need to be sent. So, one way or another, I need to use the 
+compose() view. I need to get the data typed by the user on the form from the compose() view, and then 
+send it to the database.
+
+To send the email, for the time being, it’s enough to just submit the data from the “compose” form 
+into the database. That is, by submitting the data from the inputs from the page that lets you 
+compose an email, and creating an entry on the database, that’s enough. The question at hand is not 
+asking me to let the recipient read that email, nor is it asking me to save that email on the “sent” 
+mailbox.
+
+So, I need to write JS code to get the data from the inputs from the “compose” form, and submit it to 
+the database. The only inputs that I can get data from in the “compose” form are: the sender’s email 
+address, the recipient’s email address, the title of the email, and the body of the email. I will 
+get the data from those 4 inputs (or maybe 3, since it’s not urgent to get the sender’s email from 
+  the “compose” form,) and save them as an entry in the database. 
+
+In inbox.js, I think I’ll have to write a new function to let the user send an email. I could call it 
+“send_mail()”.
+
+To make a POST request when using the fetch() function to use the API, I need to add a second parameter
+to the fetch() function, which is optional. I will specify that the HTTP request that I want to make
+is a POST request. To do that, I need to use the snippet “let options = {method: ‘POST’}” (source: 
+https://www.geeksforgeeks.org/javascript-fetch-method/ )
+
+To get the data typed by the user on the inputs, and then convert that into JSON, I first need to use 
+“let variable =  document.getElementByID(‘ID_of_the_input’).value;”. 
+Then, I will use the fetch() function, specifying the route of the “emails” URL as the 1st parameter. 
+Then, as the 2nd parameter, I need to specify the kind of content that will be converted into JSON. 
+Here, I will specify that I want to do a POST request. Then, I will specify that I want to accept all 
+kinds of text. Next, I will specify that I want to get content in JSON format. Then ,and this is the 
+most important part, I will tell the fetch() function the keys for the “associative arrays” that I 
+will create in JSON. Next, I will tell that those keys will have as values the inputs of the compose 
+email form. Finally, I will create the JSON data. (Source of this entire paragraph: 
+https://youtu.be/Oive66jrwBs )
+
+For the variables, I will use the names “recipients”, “body”, and “subject”, since those are the 
+names used in the compose() view.
+
+*/
+function send_mail(e) {  // "e" is for "event"
+  e.preventDefault();
+
+  // This gets the data from the compose page inputs
+  let recipients = document.getElementById('compose-recipients').value;
+  let subject = document.getElementById('compose-subject').value;
+  let body = document.getElementById('compose-body').value;
+
+  // This uses the API to send the mail data to the database (source: https://youtu.be/Oive66jrwBs). 
+  fetch('/emails', {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-type':'application/json'
+      },
+      body:JSON.stringify({recipients:recipients, subject:subject, body:body})                
+  })
+  .then((res) => res.json())  // This creates the JSON data
+  .then((data) => console.log(data))
+} 
