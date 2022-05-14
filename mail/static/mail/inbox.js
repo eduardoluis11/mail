@@ -1,3 +1,11 @@
+/* I need to detect whether the use is clicking on the “submit” button in the compose 
+mail page. To do that, I will enter into the function that reads the whole DOM (the 
+COMContentLoaded function), and I will add an event listener for the submit button. That way, 
+if the user clicks on “submit”, the send_mail() function will be called (source: 
+https://youtu.be/Oive66jrwBs .)
+
+I need the ID of the <form> tag, and put it into the event listener of the submit button. In this case, the ID is “compose-form”.
+*/
 document.addEventListener('DOMContentLoaded', function() {
 
   // Use buttons to toggle between views
@@ -6,14 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
 
-  /* Now, I need to detect whether the use is clicking on the “submit” button in the compose 
-  mail page. To do that, I will enter into the function that reads the whole DOM (the 
-  COMContentLoaded function), and I will add an event listener for the submit button. That way, 
-  if the user clicks on “submit”, the send_mail() function will be called (source: 
-  https://youtu.be/Oive66jrwBs .)
-
-  I need the ID of the <form> tag, and put it into the event listener of the submit button. In this case, the ID is “compose-form”.
-  */
+  // This calls the send_mail() function when the user clicks on the submit button
   document.querySelector('#compose-form').addEventListener('submit', send_mail);
 
   // By default, load the inbox
