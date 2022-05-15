@@ -94,6 +94,11 @@ https://youtu.be/Oive66jrwBs )
 For the variables, I will use the names “recipients”, “body”, and “subject”, since those are the 
 names used in the compose() view.
 
+Then, I need to redirect the user from the compose page to their inbox. To do that, I think I need 
+to call the function that redirects the user to their sent mailbox at the end of the function that allows 
+the user to compose an email. That way, the user should ideally be redirected to their inbox page 
+right after sending an email.
+
 */
 function send_mail(e) {  // "e" is for "event"
   e.preventDefault();
@@ -114,4 +119,8 @@ function send_mail(e) {  // "e" is for "event"
   })
   .then((res) => res.json())  // This creates the JSON data
   .then((data) => console.log(data))
+
+  // This redirects the user to their sent mailbox
+  load_mailbox('sent')
+
 } 
