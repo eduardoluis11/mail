@@ -4,7 +4,43 @@ COMContentLoaded function), and I will add an event listener for the submit butt
 if the user clicks on “submit”, the send_mail() function will be called (source: 
 https://youtu.be/Oive66jrwBs .)
 
-I need the ID of the <form> tag, and put it into the event listener of the submit button. In this case, the ID is “compose-form”.
+I need the ID of the <form> tag, and put it into the event listener of the submit button. In this 
+case, the ID is “compose-form”.
+
+To include the React library on my project to be able to use React, I will include the 3 CDN links 
+in the inbox.js file. To include CDN links on a JS file, I will use code like the following snippet:
+var variable = document.createElement('script');  
+variable.setAttribute('src','CDN_Link');
+document.head.appendChild(variable);
+(source: Nick Weseman's reply on 
+https://stackoverflow.com/questions/43796705/how-to-include-cdn-in-javascript .) I will include it 
+on the DocumentOnLoaded() function, since I want to load the entire document before using React.
+
+For convenience purposes, I will use the same React version as the one used by Brian on his “User 
+Interfaces” lecture (source: https://youtu.be/jrBhi8wbzPw .)
+
+To see whether React is working properly, I'll use some debugging test code (source: 
+https://www.copycat.dev/blog/reactjs-cdn/ )
+
+I will try to convert the <script> tag that contains the link to all of this JS code to have 
+the attribute "type/babel" so that I can use React. Since such <script> tag doesn't have an ID, I think
+I'll have tu use querySelectorAll to get the tag. I will use setAttribute() in JS to add the "text/babel"
+attribute (source: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_element_setattribute1 .)
+Then to select the <script> tag in the html files, I will use querySelectorAll("script") (source: 
+https://www.w3schools.com/jsref/met_document_queryselectorall.asp .)
+
+In the end, I ended up using just "querySelector" to select only one <script> tag, and I appended
+the 3 CDN script tags afterwards so that only the first <script> tag got the "text/babel" attribute.
+
+I was unable to use React for some reason. So, I won't use React.
+
+Since I couldn’t get React to work, I will be creating the flash message using CSS and JS. At first, I will create on the head of the page an HTML 
+element (like a <div>), which will contain the flash message. However, the message will be initially invisible. But, after clicking on the submit 
+button on the compose page, I will temporarily make the message to be visible.
+
+To add the div to the head of the initial HTML file, I will use the “.append()” function in JS. Then, I will add a property that will make the <div> 
+to be invisible. To make the div invisible, I will use “display: none”. Then, to make it visible, I will use the “display: block” attribute.
+
 */
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -19,7 +55,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // By default, load the inbox
   load_mailbox('inbox');
+
+  // This will store the success message after the user sends an email
+  let email_sent_successfully_message = document.createElement('p');
+
+  // This adds an ID to the success message "p" tag
+  email_sent_successfully_message.setAttribute("id", "email_sent_successfully_message");
+
+  // This adds the text to the email confirmation message
+  email_sent_successfully_message.innerHTML = 'Your email was successfully sent!'
+
+  // This will store the email confirmation message on the <body> HTML tag
+  document.body.appendChild(email_sent_successfully_message);
+
+  // This makes the email success message to be invisible
+  document.querySelector('#email_sent_successfully_message').style.display = 'none';
+
+  // This will get the 1st <script> tag and add the "text/babel" attribute to it
+  // document.querySelector("script").setAttribute("type", "text/babel");
+
+  // This will load the 3 React CDNs to be able to use React
+  // var react = document.createElement('script');
+  // var reactDOM = document.createElement('script');  
+  // var babel = document.createElement('script');
+
+  // react.setAttribute('src','https://unpkg.com/react@17/umd/react.production.min.js');
+  // reactDOM.setAttribute('src','https://unpkg.com/react-dom@17/umd/react-dom.production.min.js');
+  // babel.setAttribute('src','https://unpkg.com/babel-standalone@6/babel.min.js');
+
+
+
+
+  // document.head.appendChild(react);
+  // document.head.appendChild(reactDOM);
+  // document.head.appendChild(babel);
+
+  // DEBUGGING: React test code:
+  
 });
+
+
 
 function compose_email() {
 
@@ -122,5 +197,8 @@ function send_mail(e) {  // "e" is for "event"
 
   // This redirects the user to their sent mailbox
   load_mailbox('sent')
+
+  // This makes the email success message to become visible
+  document.querySelector('#email_sent_successfully_message').style.display = 'block';
 
 } 
