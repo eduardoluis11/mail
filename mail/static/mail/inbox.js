@@ -209,7 +209,7 @@ function send_mail(e) {  // "e" is for "event"
   document.querySelector('#email_sent_successfully_message').style.display = 'block';
 
   // This will hide the flash message after a few seconds
-  setTimeout(hide_flash_message, 2000);
+  setTimeout(hide_flash_message, 4000);
 
 } 
 
