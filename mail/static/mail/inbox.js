@@ -1,3 +1,50 @@
+/* Mailbox function.
+I will have to once again use the API. In this case, I will have to use a GET request (which is the automatic request if I use fetch() 
+without specifying the 2nd parameter.) And the URL that I will have to put inside of the fetch() function as the 1st parameter will be 
+“/emails/<mailbox>”. Of course, I may need to use notation like `{mailbox}` or something like that for JS to understand the exact route.
+
+I will need to create a new function. I may name the function “mailbox()”. Inside of the function, I will make the fetch() call. To print 
+the data from the emails into one of the mailboxes, I will use code like the following (source: https://youtu.be/Oive66jrwBs ):
+  fetch('URL')
+  .then((res) => res.json())
+  .then((data) => {
+      let variable = 'Tag_from_HTML_file';
+      data.forEach(function(iteration_variable){
+          variable += `
+              <ul>
+                  <li>ID: ${iteration_variable.id}</li>
+                  <li>Body: ${iteration_variable.body}</li>
+              </ul>
+          `;
+      });
+      document.getElementById('html_element').innerHTML = variable;
+  })
+
+I may rename the function “mailbox(mailbox)”. I may call for the first time the function from “load_mailbox()”, so that I get the variable with 
+the name of the mailbox that I need to load. After a bug that I had, I decided to give another name to this function, so that I don't get any bugs
+when calling this function from the load_mailbox() function. If I use the name "mailbox", the load_mailbox() function will think that I'm trying 
+to access the "mailbox" variable, not the function.
+
+*/
+function display_mailbox_emails() {
+
+  console.log("Hello world")
+  // fetch(`'/emails/${mailbox}'`)
+  // .then((res) => res.json())
+  // .then((data) => {
+  //     let emails = data;
+  //     data.forEach(function(email){
+  //       emails += `
+  //           <ul>
+  //               <li>ID: ${email.id}</li>
+  //               <li>Body: ${email.body}</li>
+  //           </ul>
+  //       `;
+  //     });
+  //     document.getElementById('.container').innerHTML = emails;
+  // })
+}
+
 /* I need to detect whether the use is clicking on the “submit” button in the compose 
 mail page. To do that, I will enter into the function that reads the whole DOM (the 
 COMContentLoaded function), and I will add an event listener for the submit button. That way, 
@@ -96,6 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
 function compose_email() {
 
   // Show compose view and hide other views
@@ -108,6 +157,7 @@ function compose_email() {
   document.querySelector('#compose-body').value = '';
 }
 
+/* I will call the mailbox() function from here in order to obtain the proper name of the current mailbox in a variable */
 function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
@@ -116,6 +166,10 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  // Call the mailbox() function, and send the ame of the current mailbox as a parameter
+  display_mailbox_emails()
+  // mailbox()
 }
 
 /* Send mail function. This will get the data from the page for composing an email, 
@@ -217,3 +271,5 @@ function send_mail(e) {  // "e" is for "event"
 function hide_flash_message() {
   document.querySelector('#email_sent_successfully_message').style.display = 'none';
 }
+
+
