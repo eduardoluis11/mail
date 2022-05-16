@@ -59,7 +59,9 @@ function display_mailbox_emails(mailbox) {
       all_emails += data[i].subject + "<br>";
     }
 
-    document.querySelector('body').innerHTML = all_emails;
+    document.getElementById('mailbox_email_container').innerHTML = all_emails;
+
+    // document.querySelector('body').innerHTML = all_emails;
 
 
 
@@ -119,6 +121,8 @@ button on the compose page, I will temporarily make the message to be visible.
 To add the div to the head of the initial HTML file, I will use the “.append()” function in JS. Then, I will add a property that will make the <div> 
 to be invisible. To make the div invisible, I will use “display: none”. Then, to make it visible, I will use the “display: block” attribute.
 
+I will now create an element (be it a <div> or a <p>), which will store all of the email titles from the JSON data.
+
 */
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -148,6 +152,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // This makes the email success message to be invisible
   document.querySelector('#email_sent_successfully_message').style.display = 'none';
+
+  // This creates the element that stores the email titles 
+  let mailbox_email_container = document.createElement('div');
+
+  // This adds an ID to the mailbox email container <div>
+  mailbox_email_container.setAttribute("id", "mailbox_email_container");
+
+  // This will store the mailbox email container on the <body> HTML tag
+  document.body.appendChild(mailbox_email_container);
+
+
+
 
   // This will get the 1st <script> tag and add the "text/babel" attribute to it
   // document.querySelector("script").setAttribute("type", "text/babel");
