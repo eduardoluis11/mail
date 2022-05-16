@@ -33,20 +33,25 @@ function display_mailbox_emails(mailbox) {
   
   // console.log("Hello world")
   
-  // fetch(`'/emails/${mailbox}'`)
-  // .then((res) => res.json())
-  // .then((data) => {
-  //     let emails = data;
-  //     data.forEach(function(email){
-  //       emails += `
-  //           <ul>
-  //               <li>ID: ${email.id}</li>
-  //               <li>Body: ${email.body}</li>
-  //           </ul>
-  //       `;
-  //     });
-  //     document.getElementById('.container').innerHTML = emails;
-  // })
+  fetch(`/emails/${mailbox}`)
+  .then((res) => res.json())
+  .then((data) => {
+
+    // DEBUGGING message
+    console.log(data); 
+
+
+      let emails = '';
+      data.forEach(function(email){
+        emails += `
+            <ul>
+                <li>ID: ${email.id}</li>
+                <li>Body: ${email.body}</li>
+            </ul>
+        `;
+      });
+      document.getElementByID('email_sent_successfully_message').innerHTML = emails;
+  })
 }
 
 /* I need to detect whether the use is clicking on the “submit” button in the compose 
