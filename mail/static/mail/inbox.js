@@ -25,6 +25,14 @@ the name of the mailbox that I need to load. After a bug that I had, I decided t
 when calling this function from the load_mailbox() function. If I use the name "mailbox", the load_mailbox() function will think that I'm trying 
 to access the "mailbox" variable, not the function.
 
+I will try to print the JSON data into the website, since I'm getting the JSON object, but I'm unable to print it.
+I will use code from Brian's "Javascript" lecture to print the data for debugging purposes 
+(source: https://youtu.be/x5trGVMKTdY .)
+
+For debugging purposes, I will use a “for” loop to iterate every element of the array that contains 
+all of the JSON data with all of the emails. Source of the “for” loop code snippet: 
+https://www.w3schools.com/js/tryit.asp?filename=tryjs_loop_for .
+
 */
 function display_mailbox_emails(mailbox) {
 
@@ -38,7 +46,21 @@ function display_mailbox_emails(mailbox) {
   .then((data) => {
 
     // DEBUGGING message
-    console.log(data); 
+    console.log(data);
+    
+    // DEBUGGING message: This will print the JSON data into the website
+    // const all_emails = data[0].id;
+    // const all_emails = data[4].subject;
+    // document.querySelector('body').innerHTML = all_emails;
+    const array_variable = data;
+
+    let all_emails = "";
+    for (let i = 0; i < data.length; i++) {
+      all_emails += data[i].subject + "<br>";
+    }
+
+    document.querySelector('body').innerHTML = all_emails;
+
 
 
   //     let emails = '';
