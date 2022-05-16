@@ -174,6 +174,13 @@ to call the function that redirects the user to their sent mailbox at the end of
 the user to compose an email. That way, the user should ideally be redirected to their inbox page 
 right after sending an email.
 
+For the confirmation message, I will use the setTimeout() function from Javascript to tell the flash message when to disappear after 
+it appears (source: https://www.w3schools.com/jsref/met_win_settimeout.asp .) But, to make it work, I will create a new function that 
+will make the flash message to disappear. Then, I would insert that function within the setTimeout() one, and make it execute after a 
+number of seconds.
+
+The function that will make the flash message to disappear will set the “display” CSS property of the flash message to “none”. 
+
 */
 function send_mail(e) {  // "e" is for "event"
   e.preventDefault();
@@ -201,4 +208,12 @@ function send_mail(e) {  // "e" is for "event"
   // This makes the email success message to become visible
   document.querySelector('#email_sent_successfully_message').style.display = 'block';
 
+  // This will hide the flash message after a few seconds
+  setTimeout(hide_flash_message, 2000);
+
 } 
+
+// This will hide any flash messages
+function hide_flash_message() {
+  document.querySelector('#email_sent_successfully_message').style.display = 'none';
+}
