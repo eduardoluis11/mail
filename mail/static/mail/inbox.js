@@ -26,9 +26,13 @@ when calling this function from the load_mailbox() function. If I use the name "
 to access the "mailbox" variable, not the function.
 
 */
-function display_mailbox_emails() {
+function display_mailbox_emails(mailbox) {
 
-  console.log("Hello world")
+  // DEBUGGING message
+  console.log(mailbox)
+  
+  // console.log("Hello world")
+  
   // fetch(`'/emails/${mailbox}'`)
   // .then((res) => res.json())
   // .then((data) => {
@@ -167,8 +171,10 @@ function load_mailbox(mailbox) {
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 
-  // Call the mailbox() function, and send the ame of the current mailbox as a parameter
-  display_mailbox_emails()
+  // Call the mailbox() function, and send the name of the current mailbox as a parameter
+  display_mailbox_emails(mailbox)
+
+
   // mailbox()
 }
 
