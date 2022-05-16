@@ -41,16 +41,16 @@ function display_mailbox_emails(mailbox) {
     console.log(data); 
 
 
-      let emails = '';
-      data.forEach(function(email){
-        emails += `
-            <ul>
-                <li>ID: ${email.id}</li>
-                <li>Body: ${email.body}</li>
-            </ul>
-        `;
-      });
-      document.getElementByID('email_sent_successfully_message').innerHTML = emails;
+  //     let emails = '';
+  //     data.forEach(function(email){
+  //       emails += `
+  //           <ul>
+  //               <li>ID: ${email.id}</li>
+  //               <li>Body: ${email.body}</li>
+  //           </ul>
+  //       `;
+  //     });
+  //     document.getElementByID('email_sent_successfully_message').innerHTML = emails;
   })
 }
 
