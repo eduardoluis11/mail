@@ -33,6 +33,17 @@ For debugging purposes, I will use a “for” loop to iterate every element of 
 all of the JSON data with all of the emails. Source of the “for” loop code snippet: 
 https://www.w3schools.com/js/tryit.asp?filename=tryjs_loop_for .
 
+BUG: emails are appearing below the compose form in the compose page. If I come from the “sent” mailbox, all of the sent emails will show up in the 
+compose page. Meanwhile, if I come from the “inbox” page, all of the inbox emails will show up in the compose page.
+	
+A possible solution would be to give the CSS property of “display none” to the div that contains all of the emails whenever the compose page is 
+currently selected. The compose page is the selected page whenever the compose_page() function is being executed. The emails are contained in the 
+div with ID “mailbox_email_container”.
+	
+So, if I change the “display” property to “none” to the “mailbox_email_container” div whenever the compose_page() function is being executed, I 
+can make the emails disappear whenever I enter the compose page. Of course, I need to make the emails visible whenever I enter any of the mailboxes. 
+So, I can make the “display” property to be “block” whenever I use the API for fetching the mailbox emails.
+
 */
 function display_mailbox_emails(mailbox) {
 
@@ -41,6 +52,7 @@ function display_mailbox_emails(mailbox) {
   
   // console.log("Hello world")
   
+  // This gets the emails in JSON format
   fetch(`/emails/${mailbox}`)
   .then((res) => res.json())
   .then((data) => {
@@ -52,14 +64,23 @@ function display_mailbox_emails(mailbox) {
     // const all_emails = data[0].id;
     // const all_emails = data[4].subject;
     // document.querySelector('body').innerHTML = all_emails;
-    const array_variable = data;
 
+    // This stores all the emails in an array
+    const all_emails_array = data;
+
+    // This stores all the emails in string format
     let all_emails = "";
-    for (let i = 0; i < data.length; i++) {
-      all_emails += data[i].subject + "<br>";
+
+    // This iterates over all the emails, and stores them as strings in a variable
+    for (let i = 0; i < all_emails_array.length; i++) {
+      all_emails += all_emails_array[i].subject + "<br>";
     }
 
+    // This prints all the emails
     document.getElementById('mailbox_email_container').innerHTML = all_emails;
+
+    // This turns the emails back to visible after exiting the compose page
+    document.getElementById('mailbox_email_container').style.display = 'block';
 
     // document.querySelector('body').innerHTML = all_emails;
 
@@ -191,7 +212,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+/* This renders the compose page. 
 
+I will hide all the emails whenever a user enters the compose mail page. 
+
+*/
 function compose_email() {
 
   // Show compose view and hide other views
@@ -202,6 +227,9 @@ function compose_email() {
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
+
+  // This make the emails disappear from the compose page
+  document.getElementById('mailbox_email_container').style.display = 'none';
 }
 
 /* I will call the mailbox() function from here in order to obtain the proper name of the current mailbox in a variable */
