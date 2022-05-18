@@ -479,6 +479,10 @@ Then, in the view_email() function, I will add the HTML code from the selected e
 exits the page, I will hide that div, and show the divs with all of the emails from the mailboxes, or the compose page, depending on the page 
 that the user enters. Remember to show or hide the titles (the <h1> or <h2> tags), depending on the page. 
 
+Now, I need to hide the emails and the titles (<h3>) from the mailboxes whenever I click on an email. Then, if I reenter the mailboxes, I need 
+to re-render the <h3> titles and the emails. The <h3> titles don’t have an ID. So, I will select all <h3> tags, and I will hide them whenever 
+I click on an email.
+
 */
 function view_email(email_id) {
 
@@ -519,6 +523,11 @@ function view_email(email_id) {
 
       // This hides the rest of the emails
       document.getElementById('mailbox_email_container').style.display = 'none';
+
+      // This will hide the "Inbox" title
+      document.querySelector('#emails-view').style.display = 'none';
+
+      // document.querySelectorAll('h3').style.display = 'none';
   
     })
 }
