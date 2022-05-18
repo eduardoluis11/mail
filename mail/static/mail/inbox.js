@@ -207,8 +207,23 @@ To fix the margins so that the emails are aligned with the navbar and the websit
 all of the emails. This works since “container” is a Bootstrap class. Also, if I add the borders after adding the correct margins, the vertical 
 borders won’t be touching the browser’s margins, so they will be visible and look perfect.
 
+I will go back to the DocumentOnLoaded() function, and I will create a new div. That div will contain the text from the selected email. This 
+way, I won’t have to overwrite all of the HTML from the div that displays all of the emails of the mailboxes. 
+
+I’m having trouble hiding the selected email once I change pages. What I could do is create a conditional that says that if the function that 
+displays the selected email is being executed, to display the div of the selected email. Otherwise, that div should be hidden. I could make a 
+“global” conditional, or insert a conditional inside of the DocumentOnLoaded() function. Then, I will say “if view_email() is true, then hide 
+the div with the selected email” (source: Leo’s question from 
+https://stackoverflow.com/questions/44912898/how-to-check-if-functions-have-been-executed .)
+
 */
 document.addEventListener('DOMContentLoaded', function() {
+
+  // This creates the <div> that will contain an individual email if the user clicks on it 
+  let selected_email_container = document.createElement('div');
+  selected_email_container.setAttribute("id", "selected_email_container");
+  selected_email_container.setAttribute("class", "container");
+  document.body.appendChild(selected_email_container);
 
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
@@ -250,6 +265,19 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.appendChild(mailbox_email_container);
 
 
+
+  // This will show the selected email div if the click on it
+  // if (view_email(e) == true) {
+  //   document.getElementById('selected_email_container').style.display = 'block';
+  // }
+
+  //This will hide the div if the user clicks on another page
+  // else {
+  //   document.getElementById('selected_email_container').style.display = 'none';
+  // }
+
+  // The div with the selected email should be hidden unless the user clicks on any email 
+  // document.getElementById('selected_email_container').style.display = 'none';
 
 
   // This will get the 1st <script> tag and add the "text/babel" attribute to it
@@ -296,6 +324,9 @@ function compose_email() {
 
   // This make the emails disappear from the compose page
   document.getElementById('mailbox_email_container').style.display = 'none';
+
+  // This hides the selected email div
+  document.getElementById('selected_email_container').style.display = 'none';
 }
 
 /* I will call the mailbox() function from here in order to obtain the proper name of the current mailbox in a variable */
@@ -310,6 +341,10 @@ function load_mailbox(mailbox) {
 
   // Call the mailbox() function, and send the name of the current mailbox as a parameter
   display_mailbox_emails(mailbox)
+
+  // This hides the selected email div
+  // document.getElementById('selected_email_container').style.display = 'none';
+  
 
 
   // mailbox()
@@ -434,6 +469,13 @@ emails will disappear, and only the selected email will be printed onscreen.
 
 At first, I will print the email’s sender, recipients, subject, timestamp, and body with a rough format just to check that I’m properly 
 getting the data.
+
+I will have to hide the “Sent” and “Inbox” titles whenever I click on an email.
+
+Then, in the view_email() function, I will add the HTML code from the selected email to that div, and make that div visible. Then, if the user 
+exits the page, I will hide that div, and show the divs with all of the emails from the mailboxes, or the compose page, depending on the page 
+that the user enters. Remember to show or hide the titles (the <h1> or <h2> tags), depending on the page. 
+
 */
 function view_email(email_id) {
 
@@ -466,8 +508,11 @@ function view_email(email_id) {
       `;
 
 
-      // This prints the selected email (by overwriting the emails from the mailboxes. FIX LATER.)
-      document.getElementById('mailbox_email_container').innerHTML = email_in_string_format;
+      // This prints the selected email
+      document.getElementById('selected_email_container').innerHTML = email_in_string_format;
+
+      // This makes the selected email div to become visible
+      document.getElementById('selected_email_container').style.display = 'block';
   
     })
 }
