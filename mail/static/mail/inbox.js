@@ -483,6 +483,11 @@ Now, I need to hide the emails and the titles (<h3>) from the mailboxes whenever
 to re-render the <h3> titles and the emails. The <h3> titles don’t have an ID. So, I will select all <h3> tags, and I will hide them whenever 
 I click on an email.
 
+To mark the email as read, it will be similar to the POST request that I did for one of the previous questions. The main difference is that, 
+instead of POST, I will use a PUT request. Also, the only column that I will be modifying will be “read”, which I will turn into “true”. This 
+will be only for emails in the “inbox” mailbox. So, it would be best to use a conditional. For that, I think I could put a condition that 
+says that, if the selected email’s “read” attribute is false, that I will change it to true via a PUT request and a fetch() function.
+
 */
 function view_email(email_id) {
 
@@ -526,6 +531,23 @@ function view_email(email_id) {
 
       // This will hide the "Inbox" title
       document.querySelector('#emails-view').style.display = 'none';
+
+      // This detects whether the email is from the inbox (unread)
+      if (selected_email.read == false) {
+
+        // This PUT request will mark the email as read
+        fetch(`/emails/${email_id}`, {
+          method: 'PUT',
+          headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-type':'application/json'
+          },
+          body:JSON.stringify({read:true})                
+        })
+        // .then((res) => res.json())  // This creates the JSON data
+        // .then((data) => console.log(data))
+
+        }
 
       // document.querySelectorAll('h3').style.display = 'none';
   

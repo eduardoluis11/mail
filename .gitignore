@@ -50,3 +50,14 @@ venv.bak/
 .eslintrc.js
 package.json
 package-lock.json
+
+# Pycharm's files and folders
+.gitignore.bak
+.idea/dbnavigator.xml
+.idea/mail.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/.gitignore
