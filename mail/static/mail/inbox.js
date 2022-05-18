@@ -58,6 +58,7 @@ be set to white. Then, I will insert that variable inside of the HTML code that 
 to the div with the “row” class. That background-color will be equal to the variable that changes between white or gray. Source of the code 
 snippet for using "if" statements in JS: https://www.w3schools.com/js/js_if_else.asp
 
+Source of the shade of gray that I'm using for the emails: https://www.w3schools.com/colors/colors_shades.asp
 */
 function display_mailbox_emails(mailbox) {
 
@@ -91,8 +92,9 @@ function display_mailbox_emails(mailbox) {
       // This will determine whether to set an email's background color to white or gray
       let email_color = '';
 
+      // This sets the emails color depending on whether they've been read or not
       if (all_emails_array[i].read == true) {
-        email_color = "gray";
+        email_color = "#C8C8C8";
       }
       else {
         email_color = "white";
