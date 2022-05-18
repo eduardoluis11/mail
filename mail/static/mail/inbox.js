@@ -59,6 +59,17 @@ to the div with the “row” class. That background-color will be equal to the 
 snippet for using "if" statements in JS: https://www.w3schools.com/js/js_if_else.asp
 
 Source of the shade of gray that I'm using for the emails: https://www.w3schools.com/colors/colors_shades.asp
+
+I will make the whole div that contains an individual email to be clickable. So, the best place to place the onclick() event would be on the div 
+with the “row” class.
+
+Or, I could add an ID to every individual email in the “for” loop. The ID would be the email’s ID from the JSON data. Then, I could select that 
+specific email when the user clicks it by using a querySelector or a getElementByID, and I would select the email with the ID of the current 
+iteration of the emails array. This should all be done in the display_email_messages() function, since it’s where I have the name of the 
+variables that I need to access. I would use a snippet like the following:
+
+document.querySelector(`#${emails_array.id}`).addEventListener('click', () => view_email(emails_array.id));
+
 */
 function display_mailbox_emails(mailbox) {
 
@@ -102,7 +113,7 @@ function display_mailbox_emails(mailbox) {
 
       // This generates the HTML code for each email
       all_emails += `
-        <div class="row individual_email" style="background-color: ${email_color};">
+        <div id="${all_emails_array[i].id}" class="row individual_email" style="background-color: ${email_color};">
           <div class="col-sm">
             <b>${all_emails_array[i].sender}</b> ${all_emails_array[i].subject}
           </div>
@@ -111,6 +122,10 @@ function display_mailbox_emails(mailbox) {
           </div>
         </div>
       `;
+
+      // This sends the user to the view_email() function if the user clicks on an email
+      // document.getElementById(`${all_emails_array[i].id}`).addEventListener('click', () => view_email(all_emails_array[i].id));
+
     }
 
     // This prints all the emails
@@ -118,6 +133,7 @@ function display_mailbox_emails(mailbox) {
 
     // This turns the emails back to visible after exiting the compose page
     document.getElementById('mailbox_email_container').style.display = 'block';
+
 
     // document.querySelector('body').innerHTML = all_emails;
 
@@ -391,6 +407,24 @@ function send_mail(e) {  // "e" is for "event"
 // This will hide any flash messages
 function hide_flash_message() {
   document.querySelector('#email_sent_successfully_message').style.display = 'none';
+}
+
+/* This renders the emails that gets clicked by the user.
+
+Since I need to use the API again to make a GET request using fetch(), I will need to probably make another fetch() function. I will create a 
+new separate function. Then, from the display_mailbox_emails() function, I will send the user to the new function that I will create. However, 
+to open the correct email (the one that I click,) I will get the ID of that email, and I will send it to the new function as a parameter. 
+For instance, I can put an onclick() event in which, if the user clicks on the email, they will activate a function called 
+“view_email($(email_variable.id)).”
+
+That way, I will send the user to the function that displays that email, and the parameter will tell the web app which email to render.
+
+
+*/
+function view_email(email_id) {
+
+  // DEBUGGING message: this detects if I'm getting the email ID from the mailbox() function
+  console.log(email_id)
 }
 
 
