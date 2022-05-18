@@ -161,6 +161,10 @@ to be invisible. To make the div invisible, I will use “display: none”. Then
 
 I will now create an element (be it a <div> or a <p>), which will store all of the email titles from the JSON data.
 
+To fix the margins so that the emails are aligned with the navbar and the website’s header, I will add the “container” class to the div that contains 
+all of the emails. This works since “container” is a Bootstrap class. Also, if I add the borders after adding the correct margins, the vertical 
+borders won’t be touching the browser’s margins, so they will be visible and look perfect.
+
 */
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -196,6 +200,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // This adds an ID to the mailbox email container <div>
   mailbox_email_container.setAttribute("id", "mailbox_email_container");
+
+  // This Bootstrap class will fix the margins for the container that contains the emails
+  mailbox_email_container.setAttribute("class", "container");
 
   // This will store the mailbox email container on the <body> HTML tag
   document.body.appendChild(mailbox_email_container);

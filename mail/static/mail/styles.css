@@ -2,7 +2,14 @@ textarea {
     min-height: 400px;
 }
 
+/* Styles for email confirmation flash message */
 #email_sent_successfully_message{
     color: green;
 
 }
+
+/* Styles for each individual email */
+/* . {
+
+} */
+
