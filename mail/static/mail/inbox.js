@@ -425,12 +425,28 @@ For instance, I can put an onclick() event in which, if the user clicks on the e
 
 That way, I will send the user to the function that displays that email, and the parameter will tell the web app which email to render.
 
+Now, I will create the fetch() function for the view_email() function. This fetch() function will go to the “/emails/email_id” route. The email 
+ID will be the email_id parameter that I’m getting from the display_mailbox_emails(). That fetch() function will give me JSON data. Then, I will 
+try to print some of that JSON data to check if I’m getting the email data correctly.
+	
+If it works, I can just rewrite the entire HTML code within the container that displays all of the emails of any inbox. That way, all of the 
+emails will disappear, and only the selected email will be printed onscreen.
 
 */
 function view_email(email_id) {
 
   // DEBUGGING message: this detects if I'm getting the email ID from the mailbox() function
   console.log(email_id)
+
+    // This gets the selected email in JSON format
+    fetch(`/emails/${email_id}`)
+    .then((res) => res.json())
+    .then((data) => {
+  
+      // DEBUGGING message: this should display the selected email in JSON format
+      console.log(data);
+  
+    })
 }
 
 
