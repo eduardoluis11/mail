@@ -432,6 +432,8 @@ try to print some of that JSON data to check if I’m getting the email data cor
 If it works, I can just rewrite the entire HTML code within the container that displays all of the emails of any inbox. That way, all of the 
 emails will disappear, and only the selected email will be printed onscreen.
 
+At first, I will print the email’s sender, recipients, subject, timestamp, and body with a rough format just to check that I’m properly 
+getting the data.
 */
 function view_email(email_id) {
 
@@ -442,9 +444,30 @@ function view_email(email_id) {
     fetch(`/emails/${email_id}`)
     .then((res) => res.json())
     .then((data) => {
-  
+
       // DEBUGGING message: this should display the selected email in JSON format
       console.log(data);
+
+      // This contains the selected email in JSON format
+      let selected_email = data;
+  
+      // This creates the HTML code that will print the selected email
+      let email_in_string_format = `
+        <div id="${selected_email.id}">
+
+          <p>From: ${selected_email.sender}</p> 
+          <p>To: ${selected_email.recipients}</p> 
+          <p>Subject: ${selected_email.subject}</p>
+          <p>Timestamp: ${selected_email.timestamp}</p>
+
+          <p>${selected_email.body}</p>
+
+        </div>
+      `;
+
+
+      // This prints the selected email (by overwriting the emails from the mailboxes. FIX LATER.)
+      document.getElementById('mailbox_email_container').innerHTML = email_in_string_format;
   
     })
 }
