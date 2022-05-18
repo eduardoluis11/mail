@@ -140,6 +140,9 @@ function display_mailbox_emails(mailbox) {
     // This turns the emails back to visible after exiting the compose page
     document.getElementById('mailbox_email_container').style.display = 'block';
 
+    // This hides the selected email <div>
+    document.getElementById('selected_email_container').style.display = 'none';
+
 
     // document.querySelector('body').innerHTML = all_emails;
 
