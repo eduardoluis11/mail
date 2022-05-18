@@ -8,8 +8,13 @@ textarea {
 
 }
 
-/* Styles for each individual email */
-/* . {
+/* Styles for each individual email.
 
-} */
+I will add borders. Source of the code snippet for the borders: https://www.w3schools.com/css/tryit.asp?filename=trycss_border-style .
+
+I will also make the borders thinner using border-width (source: https://www.w3schools.com/css/tryit.asp?filename=trycss_border-width)*/
+.individual_email {
+    border: solid;
+    border-width: 1px;
+}
 

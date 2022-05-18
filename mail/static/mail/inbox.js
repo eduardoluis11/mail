@@ -82,7 +82,7 @@ function display_mailbox_emails(mailbox) {
     // This iterates over all the emails, and stores them as strings in a variable
     for (let i = 0; i < all_emails_array.length; i++) {
       all_emails += `
-        <div class="row">
+        <div class="row individual_email">
           <div class="col-sm">
             <b>${all_emails_array[i].sender}</b> ${all_emails_array[i].subject}
           </div>
