@@ -70,6 +70,11 @@ variables that I need to access. I would use a snippet like the following:
 
 document.querySelector(`#${emails_array.id}`).addEventListener('click', () => view_email(emails_array.id));
 
+My previous method is giving me bugs, so I won’t be able to activate the view_email() function that way. So, I will add the onclick() even 
+inline while I’m creating each div for each email in the “for” loop. The snippet that I will add en each email div will be 
+onclick="function(email_id)". 
+Source of the snippet: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onclick .
+
 */
 function display_mailbox_emails(mailbox) {
 
@@ -113,7 +118,8 @@ function display_mailbox_emails(mailbox) {
 
       // This generates the HTML code for each email
       all_emails += `
-        <div id="${all_emails_array[i].id}" class="row individual_email" style="background-color: ${email_color};">
+        <div id="${all_emails_array[i].id}" class="row individual_email" style="background-color: ${email_color};" 
+        onclick="view_email(${all_emails_array[i].id})">
           <div class="col-sm">
             <b>${all_emails_array[i].sender}</b> ${all_emails_array[i].subject}
           </div>
