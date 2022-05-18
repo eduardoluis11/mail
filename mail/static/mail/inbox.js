@@ -45,7 +45,13 @@ can make the emails disappear whenever I enter the compose page. Of course, I ne
 So, I can make the “display” property to be “block” whenever I use the API for fetching the mailbox emails.
 
 The JSON data in the console tells me the keywords that I need to use to get each piece of data. For instance, if I want the email of the sender, 
-I need to use the keyword "sender", since that's the variable that stores the sender's email according to the JSON data. 
+I need to use the keyword "sender", since that's the variable that stores the sender's email according to the JSON data.
+
+I will add Bootstrap classes to the divs that contain each individual email to separate the timestamp from the email title. I will do that since, 
+currently, the subject and the timestamp are too close to each other, so the title of each email is difficult to read. So, I will use a Bootstrap 
+grid. The grid will be of 1 row and 2 columns. In the 1st column, I will add the sender’s email address and the subject. Then, in the 2nd column, 
+I will print the timestamp. Source of the Bootstrap code snippet: https://getbootstrap.com/docs/4.4/layout/grid/ 
+
 */
 function display_mailbox_emails(mailbox) {
 
@@ -76,8 +82,13 @@ function display_mailbox_emails(mailbox) {
     // This iterates over all the emails, and stores them as strings in a variable
     for (let i = 0; i < all_emails_array.length; i++) {
       all_emails += `
-        <div>
-          <b>${all_emails_array[i].sender}</b> ${all_emails_array[i].subject} ${all_emails_array[i].timestamp} 
+        <div class="row">
+          <div class="col-sm">
+            <b>${all_emails_array[i].sender}</b> ${all_emails_array[i].subject}
+          </div>
+          <div class="col-sm">
+            ${all_emails_array[i].timestamp} 
+          </div>
         </div>
       `;
     }
