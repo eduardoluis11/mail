@@ -516,6 +516,9 @@ function view_email(email_id) {
 
       // This makes the selected email div to become visible
       document.getElementById('selected_email_container').style.display = 'block';
+
+      // This hides the rest of the emails
+      document.getElementById('mailbox_email_container').style.display = 'none';
   
     })
 }
