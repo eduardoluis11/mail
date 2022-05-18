@@ -52,6 +52,12 @@ currently, the subject and the timestamp are too close to each other, so the tit
 grid. The grid will be of 1 row and 2 columns. In the 1st column, I will add the sender’s email address and the subject. Then, in the 2nd column, 
 I will print the timestamp. Source of the Bootstrap code snippet: https://getbootstrap.com/docs/4.4/layout/grid/ 
 
+I will create a variable that will store the words “white” or “gray”, depending on whether the email has been read or not. I’ll put an if 
+statement that checks the “read” property of the current JSON item. If it’s “true”, the variable will be set to “gray”. Otherwise, it will 
+be set to white. Then, I will insert that variable inside of the HTML code that I’m generating. I will add a “style: background-color” attribute 
+to the div with the “row” class. That background-color will be equal to the variable that changes between white or gray. Source of the code 
+snippet for using "if" statements in JS: https://www.w3schools.com/js/js_if_else.asp
+
 */
 function display_mailbox_emails(mailbox) {
 
@@ -81,8 +87,20 @@ function display_mailbox_emails(mailbox) {
 
     // This iterates over all the emails, and stores them as strings in a variable
     for (let i = 0; i < all_emails_array.length; i++) {
+
+      // This will determine whether to set an email's background color to white or gray
+      let email_color = '';
+
+      if (all_emails_array[i].read == true) {
+        email_color = "gray";
+      }
+      else {
+        email_color = "white";
+      }
+
+      // This generates the HTML code for each email
       all_emails += `
-        <div class="row individual_email">
+        <div class="row individual_email" style="background-color: ${email_color};">
           <div class="col-sm">
             <b>${all_emails_array[i].sender}</b> ${all_emails_array[i].subject}
           </div>
