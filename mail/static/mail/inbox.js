@@ -44,6 +44,8 @@ So, if I change the “display” property to “none” to the “mailbox_email
 can make the emails disappear whenever I enter the compose page. Of course, I need to make the emails visible whenever I enter any of the mailboxes. 
 So, I can make the “display” property to be “block” whenever I use the API for fetching the mailbox emails.
 
+The JSON data in the console tells me the keywords that I need to use to get each piece of data. For instance, if I want the email of the sender, 
+I need to use the keyword "sender", since that's the variable that stores the sender's email according to the JSON data. 
 */
 function display_mailbox_emails(mailbox) {
 
@@ -73,7 +75,11 @@ function display_mailbox_emails(mailbox) {
 
     // This iterates over all the emails, and stores them as strings in a variable
     for (let i = 0; i < all_emails_array.length; i++) {
-      all_emails += all_emails_array[i].subject + "<br>";
+      all_emails += `
+        <div>
+          <b>${all_emails_array[i].sender}</b> ${all_emails_array[i].subject} ${all_emails_array[i].timestamp} 
+        </div>
+      `;
     }
 
     // This prints all the emails
