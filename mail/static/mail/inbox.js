@@ -663,6 +663,18 @@ I will need to put an if statement to decide on whether to use the fetch() funct
 
 I’ll just call the load_inbox() function, and I’ll insert “inbox” as a parameter to load the user’s inbox.
 
+BUG: After archiving or unarchiving an email, I need to reload the page in order to see the email getting archived or unarchived.
+
+BUG FIX: If I refresh the page, I will go back to the inbox anyways. Remember that the 1st page that gets loaded in the DOMContentLoaded is the 
+inbox page. Also, if I refresh the page. 
+
+If I can somehow refresh the page right after archiving or unarchiving an email, I could kill 2 birds with 1 stone: I could show the email being 
+archived and fix the bug, and I could load the user’s inbox.
+
+To reload the page using JS, I need to use the function “document.location.reload()” (source: 
+https://www.quackit.com/javascript/javascript_refresh_page.cfm .) Now, to archive or unarchive an email in the database, and then reload 
+the page so that the changes are visible, I will have to first load the inbox, and the I will have to reload the page using JS.
+
 */
 function archive_and_unarchive(email_id, isArchived) {
   
@@ -697,6 +709,9 @@ function archive_and_unarchive(email_id, isArchived) {
 
   // This loads the user's inbox
   load_mailbox('inbox');
+  document.location.reload()
+
+  
 
 }
 
