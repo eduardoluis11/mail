@@ -529,7 +529,7 @@ DOMOnLoaded() function. I will render the button on top of the emails, since tha
 emails. 
 
 I will initially leave the text empty of the archive button. I will load the text of the button to display “archive” or “unarchive” depending 
-on whether its “archive” status is “true” or “false” in the JSON data. Also, whenever I render “sent” emails, I will hide the button by setting 
+on whether its “archived” status is “true” or “false” in the JSON data. Also, whenever I render “sent” emails, I will hide the button by setting 
 its “display” property to “none” by using an getElementByID and an “if” statement.
 
 */
@@ -605,6 +605,19 @@ function view_email(email_id) {
 
         // This will make the archive button visible
         document.getElementById('archive_button').style.display = 'block';
+
+        // This checks if the email is archived on the database
+        if (selected_email.archived == false) {
+          // This names the button "Archive"
+          document.getElementById('archive_button').innerHTML = 'Archive';
+        }
+
+        // If the email is already archived, the button will be named "Unarchive"
+        else {
+          document.getElementById('archive_button').innerHTML = 'Unarchive';
+        }
+
+
       }
       // This will hide the archive button
       else {
