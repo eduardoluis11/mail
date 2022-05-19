@@ -1,3 +1,6 @@
+/* Global variable that keeps track of the current mailbox */
+var current_mailbox = ''
+
 /* Mailbox function.
 I will have to once again use the API. In this case, I will have to use a GET request (which is the automatic request if I use fetch() 
 without specifying the 2nd parameter.) And the URL that I will have to put inside of the fetch() function as the 1st parameter will be 
@@ -78,8 +81,8 @@ Source of the snippet: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsr
 */
 function display_mailbox_emails(mailbox) {
 
-  // DEBUGGING message
-  console.log(mailbox)
+  // DEBUGGING message: this displays the current mailbox
+  // console.log(mailbox)
   
   // console.log("Hello world")
   
@@ -332,8 +335,18 @@ function compose_email() {
   document.getElementById('selected_email_container').style.display = 'none';
 }
 
-/* I will call the mailbox() function from here in order to obtain the proper name of the current mailbox in a variable */
+/* I will call the mailbox() function from here in order to obtain the proper name of the current mailbox in a variable.
+
+I will modify the global variable that keeps track of the current mailbox in here. 
+
+*/
 function load_mailbox(mailbox) {
+
+  // This stores the current mailbox in which the user is located
+  current_mailbox = mailbox;
+
+  // DEBUGGING message: this shows the name of the current mailbox
+  console.log(current_mailbox);
   
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
@@ -553,5 +566,32 @@ function view_email(email_id) {
   
     })
 }
+
+/* This will archive emails.
+
+Only the inbox emails can be archived. So, I will put the “archive” button whenever I open an email. I will make it disappear of I exit the 
+selected email. Sent emails should NOT display the archive button. To do this, I will look at the function that activates the inbox page, and, 
+from there, I will make a call to a function that archives emails. However, the button should appear only when I open an inbox email, not when 
+I’m displaying all of the inbox emails.
+
+I will style the archive button using Bootstrap.
+
+I need to know how to differentiate inbox emails from sent emails. This way, I will only render the archive button when viewing an individual 
+email, but only for inbox emails.
+
+After reading the views, I remember that I’m storing the name of the mailbox in a variable called “mailbox”. That way, I can differentiate 
+between being on the inbox from being on the sent mailbox.
+
+The emails in the “archived” mailbox will technically also have the “archive” button, but instead of “archive”, it will be called “unarchive”. 
+Or, I will toggle between the “archive” and “unarchive” buttons whenever I click them on either the inbox or the archived mailbox, just like I 
+did with the watchlist button in the commerce project assignment. 
+
+To keep track of the current mailbox that I’m currently in, I could create a global variable. I could create a variable outside of any function 
+so that it works as a global variable. And I would declare it using “var”, not “let”. Then, to modify it, I would go into the load_mailbox() 
+function. To do that, I would make its parameter, the “mailbox” variable, equal to the global variable. That way, the global variable would now 
+the current mailbox in which the users are currently located.
+
+*/
+
 
 
