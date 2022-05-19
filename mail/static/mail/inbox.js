@@ -553,7 +553,8 @@ function view_email(email_id) {
       let email_in_string_format = `
         <div id="${selected_email.id}">
 
-          <button id="archive_button" class="btn btn-primary"></button>
+          <button id="archive_button" class="btn btn-primary" 
+          onclick="archive_and_unarchive(${selected_email.id}, ${selected_email.archived});"></button>
 
           <p>From: ${selected_email.sender}</p> 
           <p>To: ${selected_email.recipients}</p> 
@@ -651,7 +652,33 @@ so that it works as a global variable. And I would declare it using “var”, n
 function. To do that, I would make its parameter, the “mailbox” variable, equal to the global variable. That way, the global variable would now 
 the current mailbox in which the users are currently located.
 
+Archiving an email will be quite similar to what I did in a previous question to use a PUT request to mark an email as read. The difference will be that, 
+instead of modifying the “read” column, I will be modifying the “archived” one from the JSON data of the selected email.
+
+I could insert a parameter to it to determine whether to archive or unarchive the selected email. In fact, I need the email's ID as a parameter.
+So, I could insert 2 parameters to this function: one for getting the email ID, and another for deciding on whether to archive or unarchive the
+email.
+
+I will need to put an if statement to decide on whether to use the fetch() function to archive or to unarchive an email. 
+
 */
+function archive_and_unarchive(email_id, isArchived) {
+  
+  // DEBUG message
+  console.log("This is the archive function.")
+
+  // This will archive an email
+  // fetch(`/emails/${email_id}`, {
+  //   method: 'PUT',
+  //   headers: {
+  //       'Accept': 'application/json, text/plain, */*',
+  //       'Content-type':'application/json'
+  //   },
+  //   body:JSON.stringify({archived:true})                
+  // })
+
+
+}
 
 
 
