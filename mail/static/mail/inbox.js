@@ -661,6 +661,8 @@ email.
 
 I will need to put an if statement to decide on whether to use the fetch() function to archive or to unarchive an email. 
 
+I’ll just call the load_inbox() function, and I’ll insert “inbox” as a parameter to load the user’s inbox.
+
 */
 function archive_and_unarchive(email_id, isArchived) {
   
@@ -681,7 +683,7 @@ function archive_and_unarchive(email_id, isArchived) {
     })
   }
   else {
-    
+
     // This will unarchive an email
     fetch(`/emails/${email_id}`, {
       method: 'PUT',
@@ -692,6 +694,9 @@ function archive_and_unarchive(email_id, isArchived) {
       body:JSON.stringify({archived:false})                
     })
   }
+
+  // This loads the user's inbox
+  load_mailbox('inbox');
 
 }
 
