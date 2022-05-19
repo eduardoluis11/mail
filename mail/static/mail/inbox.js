@@ -222,6 +222,10 @@ displays the selected email is being executed, to display the div of the selecte
 the div with the selected email” (source: Leo’s question from 
 https://stackoverflow.com/questions/44912898/how-to-check-if-functions-have-been-executed .)
 
+I will store the archive button inside of the container that renders the body of an individual email. This way, I would get the correct 
+margins, and it would initially hide the button. To do that, I will use appendChild(), and specify that I want to append the button to the div 
+that prints the body of an email (source: https://www.w3schools.com/jsref/met_node_appendchild.asp .)
+
 */
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -270,6 +274,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // This will store the mailbox email container on the <body> HTML tag
   document.body.appendChild(mailbox_email_container);
 
+  // This creates the "archive" button ...
+  // let archive_button = document.createElement('button');
+  // archive_button.setAttribute("id", "archive_button");
+  // archive_button.setAttribute("class", "btn btn-primary");
+  // document.getElementById('mailbox_email_container').appendChild(archive_button);
 
 
   // This will show the selected email div if the click on it
@@ -508,6 +517,21 @@ the user opens an email on the inbox or archived mailboxes.
 To do this, I’ll put an “if” statement. I’ll use an if statement to check whether the user is located on the inbox or archive mailbox inside of 
 the fetch() function that displays the individual email. If the condition checks, I will display the debug message. 
 
+Now, I can render the “archive” button. That button will be rendered in the same “if” statement that contains the debug message that tells
+me that I’m opening an email from the inbox or the archived mailbox.
+
+But first, I need to create an HTML element that will store the “archive” and “unarchive” buttons. That can be done on the DocumentOnLoaded() 
+function. Then I will modify the CSS of those buttons whenever the user opens an inbox or archived email, which can be done on the view_email() 
+function.
+
+In the HTML code of the view_email() function with the back ticks, I can create the “archive” button. There’s no need to do this on the 
+DOMOnLoaded() function. I will render the button on top of the emails, since that's more or less how archive buttons are rendered on Gmail 
+emails. 
+
+I will initially leave the text empty of the archive button. I will load the text of the button to display “archive” or “unarchive” depending 
+on whether its “archive” status is “true” or “false” in the JSON data. Also, whenever I render “sent” emails, I will hide the button by setting 
+its “display” property to “none” by using an getElementByID and an “if” statement.
+
 */
 function view_email(email_id) {
 
@@ -528,6 +552,8 @@ function view_email(email_id) {
       // This creates the HTML code that will print the selected email
       let email_in_string_format = `
         <div id="${selected_email.id}">
+
+          <button id="archive_button" class="btn btn-primary"></button>
 
           <p>From: ${selected_email.sender}</p> 
           <p>To: ${selected_email.recipients}</p> 
@@ -571,11 +597,15 @@ function view_email(email_id) {
 
       // document.querySelectorAll('h3').style.display = 'none';
   
-      // DEBUG MESSAGE: This shows up if the user opens an email from the inbox or the archive mailbox
+      // This shows up if the user opens an email from the inbox or the archive mailbox
       if (current_mailbox == "inbox" || current_mailbox == "archive") {
+
+        // DEBUG MESSAGE
         console.log("You just opened an email from the inbox or the archive mailbox.");
-      }
+
       
+      }
+
     })
 }
 
