@@ -501,6 +501,13 @@ instead of POST, I will use a PUT request. Also, the only column that I will be 
 will be only for emails in the “inbox” mailbox. So, it would be best to use a conditional. For that, I think I could put a condition that 
 says that, if the selected email’s “read” attribute is false, that I will change it to true via a PUT request and a fetch() function.
 
+Now, I will create a variable that will only activate if the user opens an email from the inbox or the archive mailbox. So, I will need to 
+return to the function that opens individual emails (view_email(), ) create that variable, and create a debug message that will only appear if 
+the user opens an email on the inbox or archived mailboxes.
+	
+To do this, I’ll put an “if” statement. I’ll use an if statement to check whether the user is located on the inbox or archive mailbox inside of 
+the fetch() function that displays the individual email. If the condition checks, I will display the debug message. 
+
 */
 function view_email(email_id) {
 
@@ -545,7 +552,7 @@ function view_email(email_id) {
       // This will hide the "Inbox" title
       document.querySelector('#emails-view').style.display = 'none';
 
-      // This detects whether the email is from the inbox (unread)
+      // This detects whether the email is from the inbox, and if it is unread
       if (selected_email.read == false) {
 
         // This PUT request will mark the email as read
@@ -560,10 +567,15 @@ function view_email(email_id) {
         // .then((res) => res.json())  // This creates the JSON data
         // .then((data) => console.log(data))
 
-        }
+      }
 
       // document.querySelectorAll('h3').style.display = 'none';
   
+      // DEBUG MESSAGE: This shows up if the user opens an email from the inbox or the archive mailbox
+      if (current_mailbox == "inbox" || current_mailbox == "archive") {
+        console.log("You just opened an email from the inbox or the archive mailbox.");
+      }
+      
     })
 }
 
