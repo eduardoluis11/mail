@@ -603,7 +603,12 @@ function view_email(email_id) {
         // DEBUG MESSAGE
         console.log("You just opened an email from the inbox or the archive mailbox.");
 
-      
+        // This will make the archive button visible
+        document.getElementById('archive_button').style.display = 'block';
+      }
+      // This will hide the archive button
+      else {
+        document.getElementById('archive_button').style.display = 'none';
       }
 
     })
