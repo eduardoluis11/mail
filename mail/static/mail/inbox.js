@@ -667,16 +667,31 @@ function archive_and_unarchive(email_id, isArchived) {
   // DEBUG message
   console.log("This is the archive function.")
 
-  // This will archive an email
-  // fetch(`/emails/${email_id}`, {
-  //   method: 'PUT',
-  //   headers: {
-  //       'Accept': 'application/json, text/plain, */*',
-  //       'Content-type':'application/json'
-  //   },
-  //   body:JSON.stringify({archived:true})                
-  // })
+  // This will check if the email is archived or not
+  if (isArchived == false) {
 
+    // This will archive an email
+    fetch(`/emails/${email_id}`, {
+      method: 'PUT',
+      headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-type':'application/json'
+      },
+      body:JSON.stringify({archived:true})                
+    })
+  }
+  else {
+    
+    // This will unarchive an email
+    fetch(`/emails/${email_id}`, {
+      method: 'PUT',
+      headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-type':'application/json'
+      },
+      body:JSON.stringify({archived:false})                
+    })
+  }
 
 }
 
