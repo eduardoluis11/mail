@@ -571,7 +571,8 @@ function view_email(email_id) {
           <p>To: ${selected_email.recipients}</p> 
           <p>Subject: ${selected_email.subject}</p>
           <p>Timestamp: ${selected_email.timestamp}</p>
-          <button id="reply_button" class="btn btn-sm btn-outline-primary" onclick="reply('${selected_email.sender}')">
+          <button id="reply_button" class="btn btn-sm btn-outline-primary" 
+          onclick="reply('${selected_email.sender}', '${selected_email.subject}')">
             Reply
           </button>
           <hr>
@@ -753,8 +754,12 @@ the reply() function should accept at least 1 parameter.
 
 One of the problems I’m having while pre-filling the inputs is that I need to modify the “value” attribute of the inputs.
 
+To detect if the email starts with the word “Re: ”, I will need to use the includes() function to find “Re: ” as a substring of the
+email’s subject(source: https://thispointer.com/javascript-check-if-string-contains-substring/ .) If I find that substring, I will not 
+add “Re: ” at the beginning of the subject. Otherwise, I will add it to the subject.
+
 */
-function reply(sender) {
+function reply(sender, subject) {
 
   // This loads the page for composing emails
   compose_email();
@@ -764,6 +769,10 @@ function reply(sender) {
 
   // This pre-fills the recipients input with the email address of the person who sent the original email
   document.getElementById("compose-recipients").value = sender;
+
+  // This pre-fills the subject
+  document.getElementById("compose-subject").value = `Re: ${subject}`;
+
 
   // document.getElementById("compose-recipients").innerHTML = sender[0];
   
