@@ -436,7 +436,23 @@ it appears (source: https://www.w3schools.com/jsref/met_win_settimeout.asp .) Bu
 will make the flash message to disappear. Then, I would insert that function within the setTimeout() one, and make it execute after a 
 number of seconds.
 
-The function that will make the flash message to disappear will set the “display” CSS property of the flash message to “none”. 
+The function that will make the flash message to disappear will set the “display” CSS property of the flash message to “none”.
+
+BUG: If I enter from the Sent mailbox to the email composition page, and the send an email, I will be sent to the Sent mailbox, but the email that 
+was recently sent won’t show up until I reload the page.
+
+Just like when archiving emails, I will reload the page after sending the user to whatever page that they need to go after sending an email. That 
+way, the page will be reloaded after sending an email, and the sent email will show up on the Sent mailbox. However, if I reload the page, I will 
+be automatically be taken to the inbox, NOT necessarily to the previous page where the user was in before composing an email.
+	
+Let me re-read the assignment to see if I need to redirect the user to a specific page after sending an email, or if I can redirect them to 
+wherever I want to. 
+	
+Turns out that I need to redirect users to the Sent mailbox right after sending any email. And the problem of reloading the page is that I would 
+send users to their inbox. Let’s see what I can do.
+
+BUG FIX: If I reload the Sent mailbox after a timer runs out, such as the timer for the email confirmation flash message, the Sent page gets 
+reloaded, and the sent email shows up. 
 
 */
 function send_mail(e) {  // "e" is for "event"
@@ -462,6 +478,12 @@ function send_mail(e) {  // "e" is for "event"
   // This redirects the user to their sent mailbox
   load_mailbox('sent')
 
+  // load_mailbox('sent')
+
+  // This will reload the page, and then redirect users once again to the sent mailbox
+  // document.location.reload()
+  // load_mailbox('sent')
+
   // This makes the email success message to become visible
   document.querySelector('#email_sent_successfully_message').style.display = 'block';
 
@@ -473,6 +495,9 @@ function send_mail(e) {  // "e" is for "event"
 // This will hide any flash messages
 function hide_flash_message() {
   document.querySelector('#email_sent_successfully_message').style.display = 'none';
+
+  // This reloads the page to make the sent email appear on the Sent mailbox
+  load_mailbox('sent')
 }
 
 /* This renders the emails that gets clicked by the user.
@@ -777,7 +802,7 @@ function reply(sender, subject) {
     document.getElementById("compose-subject").value = subject;
   }
   else {
-    
+
     // If it doesn't start with "Re: ", I will add it to the subject
     document.getElementById("compose-subject").value = `Re: ${subject}`;
   }
