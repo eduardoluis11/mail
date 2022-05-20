@@ -61,3 +61,4 @@ package-lock.json
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/inspectionProfiles/Project_Default.xml
 .idea/.gitignore
+mail/static/mail/README.md.bak
