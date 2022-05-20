@@ -262,6 +262,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // This makes the email success message to be invisible
   document.querySelector('#email_sent_successfully_message').style.display = 'none';
 
+  // This is a message that will tell the user to wait for their email to be loaded in Sent
+  let wait_for_email_message = document.createElement('p');
+  wait_for_email_message.setAttribute("id", "wait_for_email_message");
+  wait_for_email_message.innerHTML = 'Your email will be loaded below in a few seconds...'
+  document.body.appendChild(wait_for_email_message);
+  document.querySelector('#wait_for_email_message').style.display = 'none';
+
+
+
   // This creates the element that stores the email titles 
   let mailbox_email_container = document.createElement('div');
 
@@ -484,20 +493,31 @@ function send_mail(e) {  // "e" is for "event"
   // document.location.reload()
   // load_mailbox('sent')
 
+  // This will reload the page after 1 second
+  // setTimeout(load_mailbox('sent'), 1000);
+
   // This makes the email success message to become visible
   document.querySelector('#email_sent_successfully_message').style.display = 'block';
+
+  // This will tell the user to wait until their sent email appears in Sent
+  document.querySelector('#wait_for_email_message').style.display = 'block';
 
   // This will hide the flash message after a few seconds
   setTimeout(hide_flash_message, 4000);
 
 } 
 
-// This will hide any flash messages
+// This will hide any flash messages after a few seconds
 function hide_flash_message() {
   document.querySelector('#email_sent_successfully_message').style.display = 'none';
 
+  // This makes the wait message to disappear
+  document.querySelector('#wait_for_email_message').style.display = 'none';
+
   // This reloads the page to make the sent email appear on the Sent mailbox
   load_mailbox('sent')
+  
+  // setTimeout(load_mailbox('sent'), 1000);
 }
 
 /* This renders the emails that gets clicked by the user.
@@ -568,6 +588,8 @@ I added an <hr> tag to add a line that separates the head info of the email from
 
 To properly get the email in the event listener for the reply() button, I needed to plug in the sender's email between quotation marks.
 
+Now, I need to plug in the timestamp and the body of the email in the reply() button.
+
 */
 function view_email(email_id) {
 
@@ -584,6 +606,11 @@ function view_email(email_id) {
 
       // This contains the selected email in JSON format
       let selected_email = data;
+      let sender = selected_email.sender;
+      let subject = selected_email.subject;
+      let body = selected_email.body;
+      let timestamp = selected_email.timestamp;
+
   
       // This creates the HTML code that will print the selected email
       let email_in_string_format = `
@@ -597,7 +624,7 @@ function view_email(email_id) {
           <p>Subject: ${selected_email.subject}</p>
           <p>Timestamp: ${selected_email.timestamp}</p>
           <button id="reply_button" class="btn btn-sm btn-outline-primary" 
-          onclick="reply('${selected_email.sender}', '${selected_email.subject}')">
+          onclick="reply('${sender}', '${subject}', '${timestamp}', '${body}')">
             Reply
           </button>
           <hr>
@@ -784,7 +811,7 @@ email’s subject(source: https://thispointer.com/javascript-check-if-string-con
 add “Re: ” at the beginning of the subject. Otherwise, I will add it to the subject.
 
 */
-function reply(sender, subject) {
+function reply(sender, subject, timestamp, body) {
 
   // This loads the page for composing emails
   compose_email();
@@ -801,7 +828,7 @@ function reply(sender, subject) {
     // This pre-fills the subject without the "Re: "
     document.getElementById("compose-subject").value = subject;
   }
-  else {
+  else {ñ
 
     // If it doesn't start with "Re: ", I will add it to the subject
     document.getElementById("compose-subject").value = `Re: ${subject}`;
