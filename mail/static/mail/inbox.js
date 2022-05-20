@@ -539,6 +539,8 @@ bugs in my code, I will let users reply to any email.
 So, to add the reply button, I will go back to the view_email() function, and, in the variable that generates the HTML code, I will add a button 
 with the name “Reply”. I will need to add an event listener to it later.
 
+I added an <hr> tag to add a line that separates the head info of the email from its body (source: https://www.w3schools.com/tags/tag_hr.asp 
+
 */
 function view_email(email_id) {
 
@@ -570,6 +572,7 @@ function view_email(email_id) {
           <button id="reply_button" class="btn btn-sm btn-outline-primary">
             Reply
           </button>
+          <hr>
 
           <p>${selected_email.body}</p>
 
