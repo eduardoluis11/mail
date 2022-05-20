@@ -590,6 +590,11 @@ To properly get the email in the event listener for the reply() button, I needed
 
 Now, I need to plug in the timestamp and the body of the email in the reply() button.
 
+Using "&quot" as quotation marks is helping me fix a bug whenever I try to reply to an email multiple times 
+(source: tsemer's reply on https://stackoverflow.com/questions/2004168/escape-quotes-in-javascript .)
+
+B
+
 */
 function view_email(email_id) {
 
@@ -611,6 +616,16 @@ function view_email(email_id) {
       let body = selected_email.body;
       let timestamp = selected_email.timestamp;
 
+
+      // This removes the line breaks in the body (source: https://bobbyhadz.com/blog/javascript-remove-all-line-breaks-from-string )
+      let body_sanitized = body.replace(/[\r\n]/gm, '');
+
+      // (source: bobince's reply on https://stackoverflow.com/questions/2794137/sanitizing-user-input-before-adding-it-to-the-dom-in-javascript)
+      // let body_sanitized = body.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
+      // (source: coolaj86's reply on https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex)
+      // let body_sanitized = body.replace(/\$/g, '$$$$');
+
   
       // This creates the HTML code that will print the selected email
       let email_in_string_format = `
@@ -624,7 +639,7 @@ function view_email(email_id) {
           <p>Subject: ${selected_email.subject}</p>
           <p>Timestamp: ${selected_email.timestamp}</p>
           <button id="reply_button" class="btn btn-sm btn-outline-primary" 
-          onclick="reply('${sender}', '${subject}', '${timestamp}', '${body}')">
+          onclick="reply('${sender}', '${subject}', '${timestamp}', &quot;${body_sanitized}&quot;)">
             Reply
           </button>
           <hr>
@@ -809,6 +824,28 @@ One of the problems I’m having while pre-filling the inputs is that I need to 
 To detect if the email starts with the word “Re: ”, I will need to use the includes() function to find “Re: ” as a substring of the
 email’s subject(source: https://thispointer.com/javascript-check-if-string-contains-substring/ .) If I find that substring, I will not 
 add “Re: ” at the beginning of the subject. Otherwise, I will add it to the subject.
+
+BUG 1: I can’t reply to emails that have more than 1 recipient. If I click on reply, nothing happens, and I get a message saying: “Uncaught 
+SyntaxError: missing ) after argument list”.
+
+BUG 2: if I try to reply to an email that already had a reply, I can’t send the email either. I get an error saying “Uncaught SyntaxError: '' 
+string literal contains an unescaped line break”.
+
+To try to fix the 2nd bug, I could try to escape the quotation marks in the reply button, in the part where I’m plugging in the body of the email. 
+To escape characters in JS, I need to use a backslash before the quotation marks (source: 
+https://www.geeksforgeeks.org/how-to-use-escape-characters-to-correctly-log-quotes-in-a-string-using-javascript/ .)
+
+BUG 2 FIX: I removed all of the line breaks using a replace() function, and a regular expression that removes all line breaks (source of the 
+regular expression: https://bobbyhadz.com/blog/javascript-remove-all-line-breaks-from-string .) Also, I needed to enclose the $(‘body’) 
+variable (where I’m pluggin in the body of the original email) in the reply() button by using “&quot” instead of quotation marks (source: 
+tsemer's reply on https://stackoverflow.com/questions/2004168/escape-quotes-in-javascript ). 
+
+NOTE: Bug 2 is not 100% fixed, since, if the user types in any quotes on an email, nobody will be able to reply to that email, since there 
+will be escaping problems once again. I need to remove the quotation marks escaping them by using a regular expression.
+	
+I used some regular expressions, but the failed. Source of the 1st regular expression that failed: bobince's reply from 
+https://stackoverflow.com/questions/2794137/sanitizing-user-input-before-adding-it-to-the-dom-in-javascript . Source of the 2nd regular 
+expression that failed: coolaj86's reply on https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex .
 
 */
 function reply(sender, subject, timestamp, body) {
