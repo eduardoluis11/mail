@@ -541,6 +541,8 @@ with the name “Reply”. I will need to add an event listener to it later.
 
 I added an <hr> tag to add a line that separates the head info of the email from its body (source: https://www.w3schools.com/tags/tag_hr.asp .)
 
+To properly get the email in the event listener for the reply() button, I needed to plug in the sender's email between quotation marks.
+
 */
 function view_email(email_id) {
 
@@ -569,7 +571,7 @@ function view_email(email_id) {
           <p>To: ${selected_email.recipients}</p> 
           <p>Subject: ${selected_email.subject}</p>
           <p>Timestamp: ${selected_email.timestamp}</p>
-          <button id="reply_button" class="btn btn-sm btn-outline-primary" onclick="reply()">
+          <button id="reply_button" class="btn btn-sm btn-outline-primary" onclick="reply('${selected_email.sender}')">
             Reply
           </button>
           <hr>
@@ -738,12 +740,32 @@ reply().
 	
 Then, I will add an event listener to the reply button to call the reply() function.
 
+First, I want to make sure that, after calling the view_email() function in the reply function, if I can keep doing stuff in the reply() 
+function. 
+
+If I can, I will edit the input where the use can type the recipient of the email (the “To:” input). That input should be pre-filled with 
+the email address of the person who sent the original email (the one that I’m replying to.)  This can be done by editing the inner HTML of 
+the “To:” input. That input has an ID called “compose-recipients.”
+
+I need to get as a parameter the email address of the person who sent the email. That can be done in the view_email() function. I will 
+plug in in the reply button’s event listener the email’s sender as a parameter. I will get the email’s sender from the JSON data. Also, 
+the reply() function should accept at least 1 parameter.
+
+One of the problems I’m having while pre-filling the inputs is that I need to modify the “value” attribute of the inputs.
+
 */
-function reply() {
+function reply(sender) {
 
   // This loads the page for composing emails
   compose_email();
-  
+
+  // DEBUG message: this tells me whether I'm still executing the reply() function
+  console.log("You're still inside of the reply() function.");
+
+  // This pre-fills the recipients input with the email address of the person who sent the original email
+  document.getElementById("compose-recipients").value = sender;
+
+  // document.getElementById("compose-recipients").innerHTML = sender[0];
   
 }
 
