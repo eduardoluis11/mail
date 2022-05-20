@@ -532,6 +532,13 @@ I will initially leave the text empty of the archive button. I will load the tex
 on whether its “archived” status is “true” or “false” in the JSON data. Also, whenever I render “sent” emails, I will hide the button by setting 
 its “display” property to “none” by using an getElementByID and an “if” statement.
 
+For the time being, I will let the user reply to all emails, including emails on the “sent” mailbox. Since nowhere in the assignment says that 
+users should be prevented from replying to their own emails, and since preventing users from replying to emails on the “sent” mailbox could cause 
+bugs in my code, I will let users reply to any email.
+	
+So, to add the reply button, I will go back to the view_email() function, and, in the variable that generates the HTML code, I will add a button 
+with the name “Reply”. I will need to add an event listener to it later.
+
 */
 function view_email(email_id) {
 
@@ -560,6 +567,9 @@ function view_email(email_id) {
           <p>To: ${selected_email.recipients}</p> 
           <p>Subject: ${selected_email.subject}</p>
           <p>Timestamp: ${selected_email.timestamp}</p>
+          <button id="reply_button" class="btn btn-sm btn-outline-primary">
+            Reply
+          </button>
 
           <p>${selected_email.body}</p>
 
