@@ -770,8 +770,17 @@ function reply(sender, subject) {
   // This pre-fills the recipients input with the email address of the person who sent the original email
   document.getElementById("compose-recipients").value = sender;
 
-  // This pre-fills the subject
-  document.getElementById("compose-subject").value = `Re: ${subject}`;
+  // This checks if the subject starts with "Re: "
+  if (subject.includes('Re: ')) {
+
+    // This pre-fills the subject without the "Re: "
+    document.getElementById("compose-subject").value = subject;
+  }
+  else {
+    
+    // If it doesn't start with "Re: ", I will add it to the subject
+    document.getElementById("compose-subject").value = `Re: ${subject}`;
+  }
 
 
   // document.getElementById("compose-recipients").innerHTML = sender[0];
