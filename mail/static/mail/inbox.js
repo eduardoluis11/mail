@@ -840,12 +840,16 @@ regular expression: https://bobbyhadz.com/blog/javascript-remove-all-line-breaks
 variable (where I’m pluggin in the body of the original email) in the reply() button by using “&quot” instead of quotation marks (source: 
 tsemer's reply on https://stackoverflow.com/questions/2004168/escape-quotes-in-javascript ). 
 
-NOTE: Bug 2 is not 100% fixed, since, if the user types in any quotes on an email, nobody will be able to reply to that email, since there 
-will be escaping problems once again. I need to remove the quotation marks escaping them by using a regular expression.
+NOTE: Bug 2 is not 100% fixed, since, if the user types in any double quotes on an email, or the "&quot;" symbol nobody will be able to reply 
+to that email, since there will be escaping problems once again. I need to remove the quotation marks escaping them by using a regular expression.
 	
 I used some regular expressions, but the failed. Source of the 1st regular expression that failed: bobince's reply from 
 https://stackoverflow.com/questions/2794137/sanitizing-user-input-before-adding-it-to-the-dom-in-javascript . Source of the 2nd regular 
 expression that failed: coolaj86's reply on https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex .
+
+BUG 1 FIX: By fixing bug 2. Bug 1 got automatically fixed. I can already reply emails from more than 1 recipient. It seems that removing the 
+line breaks and enclosing the “body” variable in the reply() button between “&quot” marks fixed this bug as well. Just remember to avoid 
+typing double quotation marks in any emails. 
 
 */
 function reply(sender, subject, timestamp, body) {
