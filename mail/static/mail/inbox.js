@@ -822,13 +822,19 @@ function reply(sender, subject, timestamp, body) {
   // This pre-fills the recipients input with the email address of the person who sent the original email
   document.getElementById("compose-recipients").value = sender;
 
+  // This wil pre-fill the body of the email 
+  document.getElementById("compose-body").value = `
+    On ${timestamp}, ${sender} wrote: \n
+    ${body}
+  `;
+
   // This checks if the subject starts with "Re: "
   if (subject.includes('Re: ')) {
 
     // This pre-fills the subject without the "Re: "
     document.getElementById("compose-subject").value = subject;
   }
-  else {ñ
+  else {
 
     // If it doesn't start with "Re: ", I will add it to the subject
     document.getElementById("compose-subject").value = `Re: ${subject}`;
