@@ -638,10 +638,10 @@ function view_email(email_id) {
           <button id="archive_button" class="btn btn-primary" 
           onclick="archive_and_unarchive(${selected_email.id}, ${selected_email.archived});"></button>
 
-          <p>From: ${selected_email.sender}</p> 
-          <p>To: ${selected_email.recipients}</p> 
-          <p>Subject: ${selected_email.subject}</p>
-          <p>Timestamp: ${selected_email.timestamp}</p>
+          <p><b>From:</b> ${selected_email.sender}</p> 
+          <p><b>To:</b> ${selected_email.recipients}</p> 
+          <p><b>Subject:</b> ${selected_email.subject}</p>
+          <p><b>Timestamp:</b> ${selected_email.timestamp}</p>
           <button id="reply_button" class="btn btn-sm btn-outline-primary" 
           onclick="reply('${sender}', '${subject}', '${timestamp}', &quot;${body_sanitized}&quot;)">
             Reply
