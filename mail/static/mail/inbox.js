@@ -253,6 +253,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // This adds an ID to the success message "p" tag
   email_sent_successfully_message.setAttribute("id", "email_sent_successfully_message");
 
+  // This fixes the email message's margins
+  email_sent_successfully_message.setAttribute("class", "container");
+
   // This adds the text to the email confirmation message
   email_sent_successfully_message.innerHTML = 'Your email was successfully sent!'
 
@@ -265,6 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // This is a message that will tell the user to wait for their email to be loaded in Sent
   let wait_for_email_message = document.createElement('p');
   wait_for_email_message.setAttribute("id", "wait_for_email_message");
+  wait_for_email_message.setAttribute("class", "container");
   wait_for_email_message.innerHTML = 'Your email will be loaded below in a few seconds...'
   document.body.appendChild(wait_for_email_message);
   document.querySelector('#wait_for_email_message').style.display = 'none';
